@@ -1,0 +1,704 @@
+---
+institute: 中南财经政法大学统计与数学学院
+csl: ./style/chinese-gb7714-2015-numeric.csl
+css: ./style/markdown.css
+bibliography: [./Bibfile.bib]
+notice: '@*'
+eqnPrefixTemplate: ($$i$$)
+link-citations: true
+linkReferences: true
+chapters: true
+tableEqns: false
+autoEqnLabels: true
+classoption: "aspectratio=1610"
+---
+
+
+# 引言
+
+贵金属市场是一个商品属性和金融属性共存的特殊市场，作为金融投资商品，不仅对大宗商
+品交易市场有影响，甚至影响全球经济的稳定性。黄金等贵金属由于其稀缺性、价值稳定性
+及交易便利性受到投资者喜爱，其交易活动也日趋活跃。与股票债券不同，黄金现货即
+期合约采用T+0交易方式，可随时建仓，也可随时平仓；黄金现货延期交收合约采用T+D
+交易方式^[由上海黄金交易所统一制定的、规定在将来某一特定的时间和地点交割一定数量
+标的物的标准化合约,以分期付款方式进行买卖，交易者可以选择当日交割，也可以无限期
+的延期交割。]，以分期付款方式进行买卖，交易者可以选择当日交割，也可以无限期的延
+期交割；开通夜盘交易,能有效回避夜间国际金价急剧变化所造成对国内不利影响的风险,增
+加了投资机会；保证金交易，提高资金利用率[@郭凡礼2015]。
+
+2019年12月底新冠肺炎被发现，之后在中国爆发，最后在全世界蔓延，世界经济处于自2008
+年全球金融危机以来最不稳定的状态，不可避免的造成全球经济的“停摆”。2020年3月，我
+国疫情接近尾声，而新冠肺炎在欧美国家大面积爆发，美股在十天内发生了四次熔断。面对
+通货膨胀压力，不断加剧的金融市场风险，投资者对资金的避险需求不断提高，贵金属市场
+尤其是黄金市场的保值增值能力，引起了投资者的关注。金融市场动荡下，贵金属市场的走
+势如何，贵金属产品的波动性会有何特征值得探究。
+
+然而，随着现代金融市场的快速发展，市场波动变化相比与以往更难把握，低频数据在描述
+和反映市场情况时，往往不如高频数据对市场波动的信息捕捉准确和全面。科技水平的提高
+使得高频数据的获取成为可能，如果能充分利用数据自身包含的信息，并将这种信息嵌入到
+易于估计的模型中，就可以提高对产品波动性的估计精度。
+
+本文以黄金代表贵金属现货市场，选取2019年7月1日至2020年12月31日黄金T+D高频价格数
+据作为研究对象，对贵金属产品的波动性进行研究。一般而言，金融时间序列具有尖峰厚尾
+的特性，收益率服从正态分布的假设一般不成立，故本文采用Realized GARCH模型对残差服
+从正态分布，t分布，偏t分布、广义双曲线分布等对黄金的收益率序列进行拟合，根据极大
+似然函数值和风险价值预测选出拟合效果较好的分布，并对其波动特征进行分析。
+
+
+# 国内外文献综述
+
+## 贵金属市场波动性研究综述
+
+波动性意味着价格在某一时间间隔所发生的变化，与投资者的收益息息相关。之前对于贵金
+属市场波动性的研究，学者采取了不同的模型及研究方法。林新丹(2014)通过对我国黄金期
+货价格和白银期货价格的相关性研究说明高频数据更有助于对黄金、白银价格的预测，2013
+年黄金大跌对白银市场造成了巨大的冲击，影响程度达到90%以上[@林新丹2014]。杨胜刚等
+(2019)对伦敦金属交易所的四种贵金属(黄金、白银、铂金和钯金)基于time-varying AR模
+型构建有效性程度指标对适应性市场假说(AMH)进行实证研究，发现黄金市场有效性程度指
+标的均值和波动幅度相对最小,而钯金市场的均值和波动幅度则相对最大[@杨胜刚2019]。
+
+## 已实现波动率研究综述
+
+在现代金融市场中，波动率是反映金融资产价格变化的一种统计度量，准确度量和预测金融
+资产波动率，在金融资产定价，金融风险控制等决策中是不可或缺的一步。传统对金融市场
+的波动率研究大多基于日、周、月等低频交易数据，如GARCH类和SV类模型。随着信息技术
+的不断提高，高频数据的易获取使得人们对波动率的研究更进一步。
+
+Merton(1980)在研究市场预期收益时首次提出已实现波动率的概念，将一个时间段划分为多
+个子时间段区间，用多个子时间段的收益率平方和估计该时间段的收益率方差
+[@MertonRobert1980]。已实现波动率概念提出以后，由于当时的技术限制，划分数据子
+区间还不能实现，无法真正应用到实践中。Andersen和Bollerslev等人(1998)首次将高频数
+据应用于波动率的测度上，提出已实现波动率(RV,Realized Volatility)的估计计算方法
+[@TimBollerslev],与传统的根据历史日间交易数据估计波动率不同，这种方法直接利用“日
+内收益平方和”估计波动率，证明了当抽样频率趋于无穷大时，已实现波动是积分波动的一
+致估计量。
+
+## Realized GARCH类模型文献综述
+
+已实现波动率是将高频数据应用于波动率领域，使得金融资产的波动率变得可以观测。
+Hansen等人(2012)提出了Realized GARCH 模型，将已实现波动率与GARCH(广义自回归条件
+异方差模型)结合，通过一个测量方程连接条件方差和已实现波动率，并在方程这种加入杠
+杆函数体现非对称效应，把已实现波动率作为条件方差的估计，实现收益率，波动率和已实
+现测度的联合建模，和传统GARCH类模型相比，Realized GARCH 模型提高了波动率的拟合和
+预测能力[@Hansen2012]。Realized GARCH模型不单单在建模和波动性预测方面优于其他
+GARCH类模型，后来很多学者将Realized GARCH模型进行了各种各样的延伸，并广泛应用于
+一些金融实证研究中。下面主要对一元Realized GARCH模型的发展、应用等进行叙述。
+
+由于金融时间序列往往不具备正态分布的特征，Watanbe(2012)将Hansen(2012)提出的残差
+服从正态分布的Realized GARCH 模型扩展为残差服从t分布，偏t分布的Realized GARCH 模
+型，并对基于三种不同残差分布下的Realized GARCH 模型预测VaR和ES进行实证研究
+[@Watanabe2012]。王天一等(2012)根据金融时间序列“厚尾”特征，将Realized GARCH模型
+推广到残差服从t分布，Skewed-t分布的情形,并将杠杆函数的幂次放松为待估
+参数[@王天一2012]。蒋伟和顾研(2019)将广义已实现测度引入Realized GARCH模型中,用于中国股票市场
+的波动率估计与VaR预测，并通过实证发现引入广义已实现测度改进RGARCH模型提高了
+RGARCH模型在波动率估计和VaR预测中的表现[@蒋伟2019]。Huang等人(2016)对S&P500指数
+期权进行实证研究，表明基于Realized GARCH 模型算出的定价误差小于传统模型
+[@Huang2016b]。
+
+## 文献评述
+
+从贵金属市场研究文献看，国内学者对贵金属的研究主要集中在黄金、白银、铂金上，更为
+常见的是集中在对黄金市场的相关分析上。因此，本文选取黄金代表贵金属市场进行波动性
+研究。
+
+已实现波动测度是基于高频数据计算的，阅读文献可知Realized GARCH类模型有两个基本条
+件：高频数据的获取以及已实现波动率的计算及最优选择。高频数据包含更多市场信息，相
+比于低频日数据等，基于高频数据对波动率等的拟合和预测性能更佳。对于一元Realized
+GARCH模型，针对金融时间序列尖峰厚尾的特性，将Realized GARCH模型残差分布从正态分
+布扩展到t分布，偏t分布、广义双曲线分布等，通过比较不同分布下的预测效果选择最优模
+型。
+
+
+# 已实现波动率及Realized Garch类模型基础介绍
+
+## 已实现波动率
+
+已实现波动率是基于高频数据度量的金融资产波动率。假定不考虑由买卖价差、闭市效应、
+非同步交易等因素，且没有发生跳跃,按照 Andersen和Bollerslev(1998)对已实现波动率的
+计量，已实现的波动率RV是计算期第$t$日观测到的收益率的平方和，每日交易被分割为$M$
+段，当$M$趋向于无穷大时
+$$RV_t=\sum_{i=1}^Mr_{t,i}^2$${#eq:RV} 
+&emsp;&emsp;$r_{t,i}$为金融资产或者资产组合在第 $t$交易日内的第 $i$ 个间隔的日内对
+数收益率，$lnP_{t,i}$表示金融资产或者资产组合在第$t$ 个交易日内的第 $i$ 个间隔的
+日内对数价格，$T$ 表示计数天数，$M$表示每天的时间间隔为M，与采样频率有关[@TimBollerslev]。
+
+## Realized Garch模型
+
+普通的GARCH类模型是通过日收益获得当前波动率信息，再通过当前波动信息得到下期波动
+率的期望，由于波动率是通过滞后多阶的条件方差得到的，所以当收益波动变化较快时，
+GARCH类模型并不能有效利用所有信息。Hansen等(2012)提出Realized Garch模型，该模型
+用波动率的已实现测度代替对未来波动率建模[@Hansen2012]。通过引入测量方程来实现金
+融资产收益率、已实现测度和条件波动率的联合建模。
+
+根据Hansen等(2012)的研究结果,Realized Garch模型在一阶下的估计效果已经相当不错
+[@Hansen2012]，所以本文主要采用Realized GARCH(1,1)模型进行实证研究，该模型具体形
+式为
+$$
+\begin{cases}
+r_{t}=\sqrt{h_{t}} z_{t},z_t\sim N(0,1)\\
+\ln h_{t}=\omega+\beta \ln h_{t-1}+\alpha \ln x_{t-1}\\
+ln x_{t}=\xi+\varphi \ln h_{t}+\tau\left(\mathrm{z}_{t}\right)+u_{t},u_{t} \sim iid  \left(0, \sigma_{u}^{2}\right)
+\end{cases}
+$$
+{#eq:rg1}
+&emsp;&emsp;模型的三个等式分别为收益方程、GARCH方程和测量方程。$r_t$是第$t$
+日的日收益率，$h_t=var(r_t|F_{t-1})$表示收益率的条件方差，$x_t$表示第$t$日波
+动率的已实现测度，本文使用RV作为已实现波动率的估计。$z_t$是收益率的标准随机误差
+项，残差项 $u_{t} \sim iid\left(0, \sigma_{u}^{2}\right)$，残差项可服从正态分
+布、t分布、偏t分布、广义双曲线分布等。$z_t$与$u_{t}$相互独立。测量方程将$h_t$和$x_t$联系起来。在
+Realized GARCH 模型中$h_t$是$h_{t-1}$和$x_t$的函数。
+
+为了描述收益率冲击对于波动率的非对称影响，这里在测量方程中加入了杠杆函数
+$\tau(z_t)$，Hansen等(2012)人将$\tau(z_t)$设定为以下二次形式$$\tau(z_t)=\tau_1z_t+\tau_2(z_t^2-1)$$ {#eq:tau}
+&emsp;&emsp;杠杆函数描述了Realized GARCH 模型的信息冲击曲线，表明过去时刻的收益率在大小和方
+向上同时都影响着波动率，即正的价格扰动对波动的影响和负的价格扰动对波动率产生的影
+响在大小和方向上都不一致的。
+
+
+
+```{r setup, echo=F, purl=F}
+
+################# 第 3 章 R 程序代码  ####################
+
+knitr::opts_knit$set(root.dir = getwd())
+knitr::opts_chunk$set(echo = FALSE, results = 'hide')
+knitr::opts_chunk$set(warning = FALSE, message=FALSE)
+knitr::opts_chunk$set(fig.align="center"
+                      ## ,out.width="0.9\\textwidth" # latex
+                      ,out.width="60%" # for both latex and html
+                      ,fig.width=5, fig.height=3
+                      )
+```
+
+```{r prepare, echo=F, purl=F}
+rm(list=ls())
+options(digits=4)
+options(scipen=100)
+graphics.off()
+Sys.setlocale("LC_ALL", "Chinese")
+```
+
+
+# 基于Realized Garch模型对贵金属市场波动性分析
+
+## 贵金属市场对象选取和数据预处理
+
+### 研究对象的选取
+
+贵金属主要指金、银和铂族金属(钌、铑、钯、锇、铱、铂)等8种金属元素，我国贵金属的
+现货交易主要在上海黄金交易所进行。通过计算上海黄金交易所中近2年产品月成交量占比
+可发现，黄金延期Au(T+D)^[T+D叫现货延期交收合约，是指以支付保证金的形式进行交易、
+当日无负债方式进行结算的合约，客户可以选择合约成交当日交割，也可以延期交割，同时
+引入延期补偿费机制来调节实物供求矛盾。]的月成交量占比基本在95%以上，因此本文选取
+交易量较大、上市时间较长、交易日连续、价格波动较明显的黄金延期Au(T+D)合约作为研
+究对象，以代表贵金属现货市场进行研究。
+
+由于现货交易分日市交易和夜市交易，日间交易时间为每周一至周五（国家法定节假日除
+外）09：00-15：30，夜市交易时间为：每周一至周五（国家法定节假日除外）
+20:00-02:30。所以不能按传统的交易日来看，即当天发生的交易为一个交易日来进行研
+究。对本文研究的对象Au(T+D)来说，前日20:00是交易日的开盘价，当日15:30为交易日收
+盘价（国家法定节假日除外）。国家法定节假日后第一天9:00为开盘时间，15:30为收盘时
+间。
+
+
+### 数据预处理
+
+本文选择5分钟的频率作为高频数据的抽样频率，选取Au(T+D)的5分钟交易数据，样本区间
+为2019年7月1日至2020年12月31日，数据来源于wind数据库。
+
+由于黄金含有夜市交易和日市交易，因此将数据分为两类处理。国家法定节假日后的第一
+天交易数据从当日9:00至15:30的交易形成，每天有80个时间间隔，其他交易日交易时间为
+前一日20:00至当日02:30,9:00至15:30，每天有158个时间间隔。由于开盘价是
+集中竞价^[集中竞价有利于提高交易效率，降低交易成本，减少交易纠纷。]的结果，所以
+剔除9:00,20:00的数据。将数据分为两组，第一组为2019年7月1日至2020年6月30日，作为
+样本内数据用于拟合模型，第二组为2020年7月1日至2020年12月31日，作为样本外数据，用
+于对比检验模型效果。对于交易数据的处理，剔除当天停牌或者价格几乎不变化的交易日。
+经过数据处理后，Au(T+D)有367个交易日，共有56160个5分钟的高频数据。
+
+考虑到隔夜价格^[隔夜交易通常是指在一天的晚些时候进入一支接近它最高点的股票，一些
+交易者可能会选择卖出去一半，把剩下的一半持有一段更长的时间，获得更高的价差。]的
+影响，收益率计算方式使用“收盘价-收盘价”收益率。设$t$为任意一个特定的交易日，
+$p_{t,j}$表示第$t$日的第$j$个区间的收盘价，在第$t$个交易日中，第$j$个区间的对数
+收益率为$$r_{t, j}=\ln p_{t, j}-\ln p_{t, j-1}$${#eq:rt}
+
+
+## 贵金属高频数据描述性分析及检验
+
+### 描述性统计分析
+
+本节首先根据2019年7月1日至2020年12月31日的每日收盘价根据式[@eq:rt]计算出Au(T+D)
+的每日收益率，共367个收益率数据。然后根据2019年7月1日至2020年12月31日的每个交易
+日的每五分钟收盘价分别计算出Au(T+D)的高频日内收益率，进而计算相关已实现测度估计
+量，本文采用已实现测度估计量RV。考虑到计算出来的收益率过小，为了方便研究，将收益
+率结果扩大100倍。
+
+
+```{r}
+###加载包
+library(kableExtra)
+library(knitr)
+library(fBasics)
+library(tseries)
+library(xts)
+library(readxl)
+library(urca)
+library(FinTS)
+library(parallel)
+library(rugarch)
+library(fUnitRoots)
+library(fGarch)
+library(highfrequency)
+
+```
+
+```{r eval=F}
+############构建已实现测度函数#########
+Rt=function(x) {
+    rt=rep(0,length(x)) #x为收盘价向量
+    for (i in 2:length(x)) {
+      rt[i]=(log(x[i])-log(x[i-1]))*100
+    }
+    rt
+} # 计算日内收益率函数,将收益率扩大了100倍
+
+RV=function(x,y,z) {
+    rv=rep(0,length(x)) #x为交易日向量
+    m=length(y)/length(x) #y为收盘价向量，m为时间间隔
+    for (i in 1:length(x)) {
+    for (j in 1:m){   
+    rv[i]=rv[i]+z[m*(i-1)+j]^2 #z为收益率向量
+}}
+rv 
+} #计算已实现波动RV
+
+################计算收益率#######################
+path="./data/data_raw"
+fileNames=dir(path)
+Lst1<-list() # 日内收益率数据
+for(i in fileNames) {
+    Lst1[[i]]<-as.data.frame(read.csv(paste(path,i,sep = "/"))) #读入数据
+    Lst1[[i]]$DATE=as.character(Lst1[[i]]$DATE) 
+    Lst1[[i]]$TIME=as.character(Lst1[[i]]$TIME)  #转换数据
+    Lst1[[i]]$rt=Rt(Lst1[[i]]$Close) #计算日内收益率
+    Lst1[[i]]=Lst1[[i]][which(!(Lst1[[i]]$TIME %in% c("9:05","20:05"))),] #剔除异常数据
+} 
+
+names(Lst1)    # "Au1.csv"：普通时间； "Au2.csv"：节假日后第一天
+########################各种已实现测度############
+#### 计算交易日和已实现测度
+
+Lst3=list() #存放各种向量和已实现测度表 
+for (i in (1:2)) { 
+    Lst3[[i]]=Lst1[[i]][which(Lst1[[i]]$TIME == "15:30"), "DATE"] #计算交易日
+    Lst3[[i+2]]=RV(Lst3[[i]],Lst1[[i]]$Close,Lst1[[i]]$rt) #已实现波动RV
+    Lst3[[i+4]]=as.data.frame(cbind(Lst3[[i]],Lst3[[i+2]]),stringsAsFactors = F) ##各种已实现测度
+    colnames(Lst3[[i+4]])=c("date","RV")
+}
+names(Lst3)[1:2]=c("Au1date","Au2date") #交易日
+names(Lst3)[3:4]=c("Au1_rv","Au2_rv") #RV
+names(Lst3)[5:6]=c("Au1real","Au2real") #已实现测度表
+
+Au_dayrt=read_excel('./data/day_rt.xlsx',sheet=1)#读入日收益率
+Au_dayrt$date=as.Date(Au_dayrt$date)
+
+Real_Au=rbind(Lst3[[5]],Lst3[[6]]) # Au所有交易日已实现测度
+Lst4=list(Real_Au,Au_dayrt) #存放合并后的已实现测度
+names(Lst4)[1]=c("Real_Au.csv")
+Lst4[[1]]$date=lubridate::ymd(Lst4[[1]]$date) #转为日期形式
+Lst4[[1]]=dplyr::arrange(Lst4[[1]], date) # 按日期排序
+Lst4[[1]]$RV=as.numeric(Lst4[[1]]$RV)
+Lst4[[1]]=merge(Lst4[[1]],Lst4[[2]],sort = FALSE,all = TRUE) #加入日收益率和日收盘价
+write.csv(Lst4[[1]],paste('./data/',names(Lst4)[1],sep = ""),row.names = F) #保存
+
+str(Lst4[[1]])
+###以上代码只运行一次
+
+```
+
+
+#### 序列图
+
+```{r}
+#读入数据
+AU=read.csv("./data/Real_Au.csv",header=TRUE,sep=',',stringsAsFactors=FALSE)
+AU$date=as.Date(AU$date)
+```
+
+Au(T+D)收盘价和收益率时序图如图\@ref(fig:Aurtplot)所示，从Au(T+D)的日收盘价时序
+图中可以看出，Au(T+D)价格整体呈上升趋势，但期间也有较大的波动。在收益率时序图
+中，收益率围绕着零上下波动，波动的幅度与收盘价的涨幅情况基本一致，2020年3-4月和
+8-9月收益率波动幅度较大，具有明显的“波动性聚集”特征。从2020年3月开始，国外疫情逐
+渐严重、风险资产的暴跌、市场对通胀担忧的增加等，使得黄金的避险属性突显，出现价格
+上涨和收益率大幅度波动的情况。2020年8月，各国开始陆陆续续公布新冠疫苗的进展，市
+场有所回暖，但也在一定程度上造成黄金的下跌，其对应的收益率也波动剧烈。
+
+```{r Aurtplot,eval=T,fig.width=18,fig.height=9,fig.cap = "Au(T+D)收盘价和收益率序列时序图",fig.pos="H",dev=c("png","cairo_pdf"),out.width="95%",fig.align='center',dev.args=list(family="Microsoft YaHei UI Light")}
+par(mfrow=c(2,1))
+par(mai=c(0,2,1,1))
+plot(AU$close,type='l',xlab='日期',ylab='Au(T+D)每日收盘价',xaxt="n",cex.lab=2.5,cex.axis=2,lwd=2) 
+par(mai=c(1,2,0,1))
+plot(AU$rt,type='l',xlab='日期',ylab='Au(T+D)收益率',xaxt="n",las=0,cex.lab=2.5,cex.axis=2,lwd=2) 
+axis(1,labels=c("19年8月","10月","12月","20年2月","4月","6月","8月","10月","12月"),at=c(23,63,101,139,179,218,261,304,347),cex.axis=2)
+```
+
+
+#### 基本统计特征
+
+表\@ref(tab:Aucharacteristics)列出了Au(T+D)对数收益率序列$r_t$和已实现测度RV序列
+的统计特征。可以明显看出，两个序列的峰度均大于3，具有高峰厚尾的特征，Au收益率序
+列$r_t$偏度小于0，具有左偏特征，波动率估计量RV偏度均大于0，具有右偏特征，且峰度
+较大。两个序列的J-B统计量^[J-B是Jarque-Bera统计量，用来检验是否服从正态分布。]均
+较大，表现了显著不服从于正态分布的特点。
+
+```{r}
+Real_Au <-xts(read.zoo("./data/Real_Au.csv",header=TRUE,sep=','))
+
+####Au基本统计特征
+Au_rt=basicStats(Real_Au$rt) #rt基本统计特征
+Au_RV=basicStats(Real_Au$RV) #RV基本统计特征
+
+Au_rt_JB=jarque.bera.test(Real_Au$rt)#(p<0.05 非正态) #JB检验
+Au_RV_JB=jarque.bera.test(Real_Au$RV)
+```
+
+```{r Aucharacteristics, eval=T,results='markup'}
+Auchara<-as.data.frame(array(,dim=c(2,7)))
+Auchara[1,]<-t(c(Au_rt[c("Mean",'Minimum','Maximum','Stdev','Skewness','Kurtosis'),1],as.numeric(Au_rt_JB[[1]][1])))
+Auchara[2,]<-t(c(Au_RV[c(7,3,4,14,15,16),1],as.numeric(Au_RV_JB[[1]][1])))
+colnames(Auchara)=c('均值','最小值','最大值','标准差','偏度','峰度','JB统计量')
+rownames(Auchara)=c('Au_rt','Au_RV')
+kable(Auchara, align = c('c'), caption="Au(T+D)收益率和已实现测度统计特征",longtable = TRUE, booktabs = TRUE, linesep="")%>%
+			     kable_styling(latex_options = c("scale_down", "repeat_header", "hold_position"),
+                 repeat_header_text = "(续)")
+```
+
+### 基本检验
+
+#### 平稳性检验
+
+为保证实证结果的可靠性，在进行实证分析之前首先要对收益率序列进行平稳性检
+验。本文采用ADF检验来判断序列的平稳性，检验结果如表\@ref(tab:Au-adf)所示。
+
+```{r Au-adf,eval=T,results='markup'}
+#####Au收益率序列平稳性检验########
+AuADF=adf.test(Real_Au$rt) #ADF检验
+Auadf_test=data.frame(a=AuADF$statistic[1],b=0.0001)
+colnames(Auadf_test)=c("检验统计量","P值")
+rownames(Auadf_test)="ADF检验"
+kable(Auadf_test, align = c('c'), caption="Au(T+D)收益率序列平稳性检验",longtable = TRUE, booktabs = TRUE, linesep="")
+```
+
+通过表\@ref(tab:Au-adf)的平稳性检验结果可以看到，Au(T+D)收益率序列$r_t$的ADF检验
+的p值远小于显著性水平0.01，拒绝原假设，因此可以认为Au(T+D)收益率序列$r_t$是平稳
+序列。
+
+#### 白噪声检验
+
+对Au(T+D)的收益率序列进行自相关性检验，这里分别运用(偏)自相关系数图和
+Ljung-Box Q 统计量对Au(T+D)的收益率序列进行自相关分析。
+
+```{r acf-pacf, fig.cap="收益率自相关图和偏自相关图", dev=c("png","cairo_pdf"),fig.height=4,fig.width=6, fig.pos="H",out.width="95%",fig.align='center',dev.args=list(family="Microsoft YaHei UI Light")}
+par(mfrow=c(2,1))
+par(mar=c(5,4,2,1))
+#Au
+acf(Real_Au$rt,main="",xlab="滞后期",ylab="ACF",lag.max=20,ylim=c(-0.2,1))#画自相关图
+title(main="(a)the ACF of Au Return",cex.main=0.95)
+pacf(Real_Au$rt,main="",xlab="滞后期",ylab="PACF",lag.max=20,ylim=c(-0.2,0.2))#画偏自相关图
+title(main="(b)the PACF of Au Return",cex.main=0.95)
+```
+
+图\@ref(fig:acf-pacf)显示了Au(T+D)的收益率序列的自相关图和偏自相关图，从图中可以
+看出，自相关系数在滞后阶数20阶以内均在 95%置信区间内，表明序列不具有自相关性；偏
+自相关系数在滞后阶数 20 阶以内也均在95%置信区间内，表明序列不具有偏自相关性。
+
+```{r Au-LB,eval=T,results='markup'}
+#####Au收益率序列-LB统计量########
+Au_box=Box.test(Real_Au$rt[1:241],lag=10,type = "Ljung") #随机性检验
+Q_test=data.frame(a=Au_box[1],df=Au_box[2],p=Au_box[3])
+colnames(Q_test)=c("LB统计量",'延迟阶数',"P值")
+rownames(Q_test)="纯随机性检验"
+kable(Q_test, align = c('c'), caption="Au(T+D)收益率序列纯随机性检验",longtable = TRUE, booktabs = TRUE, linesep="")
+```
+
+Ljung-Box检验是检验时间序列是否存在滞后相关的一种统计检验，原假设为序列为白噪声
+序列。通过表\@ref(tab:Au-LB)的平稳性检验结果可以看到，Au(T+D)收益率序列Ljung-Box
+Q统计量的值为 `r Au_box$statistic` ，对应p值为`r round(Au_box$p.value, 4)` ，大
+于显著性水平0.05，故Au(T+D)收益率序列为白噪声序列，不具有相关性。
+
+综合之前的平稳性检验，可以判断对数收益率序列$r_t$是一个平稳白噪声序列，不用构建ARMA模
+型。
+
+#### 残差平方序列异方差性检验
+
+```{r resi2, fig.cap="收益率残差平方时序图", dev=c("png","cairo_pdf"),fig.width=8,fig.height=3.5,fig.pos="H",out.width="95%",fig.align='center',dev.args=list(family="Microsoft YaHei UI Light")}
+par(mfrow=c(1,1))
+par(mar=c(2,4,1,2))
+x=c("201908","10","12","202002","4","6","8","10","12")
+xat=c(23,64,103,141,183,222,265,308,351)
+fit1=stats::arima(Real_Au$rt[1:241],order = c(0,0,0))
+Au_r<-stats::residuals(fit1)
+plot(Au_r^2,type="l",
+     xlab="日期",ylab="Au(T+D)残差平方",xaxt="n")
+axis(1,labels=x,at=xat)
+```
+
+经标准化后得到的残差平方时序图如图\@ref(fig:resi2)所示,从图中可以看出，对于
+Au(T+D)收益率去均值化后的残差依然有较显著的“波动性聚集”特征，这说明收益率序列可
+能存在异方差现象，需要进行异方差性检验。本文运用ARCH检验方法中的LM检验。
+
+```{r Au-ARCH,eval=T,results='markup'}
+#####Au收益率序列-ARCH检验########
+Au_arch=ArchTest(Au_r^2,lag=5) #异方差性检验
+arch_test=data.frame(stat=Au_arch[1],df=Au_arch[2],p=0.0000)
+colnames(arch_test)=c("LM检验统计量",'自由度',"P值")
+rownames(arch_test)="ARCH LM-检验"
+kable(arch_test, align = c('c'), caption="Au(T+D)残差平方序列ARCH检验",longtable = TRUE, booktabs = TRUE, linesep="")
+```
+
+ARCH效应的存在不导致OLS估计无效，但会降低估计的有效性，其原假设为：残差序列中直
+到p阶都不存在ARCH效应。对标准化后的残差平方进行ARCH效应检验，检验结果如表
+\@ref(tab:Au-ARCH)所示。Au(T+D)的LM统计量的值为28.2，对应的P值为0.0000，在0.05
+的显著性水平上拒绝残差独立的原假设，表明标准化后的残差平方存在ARCH效应。因此需对
+Au(T+D)收益率的残差拟合GARCH模型，以消除ARCH效应。
+
+
+## 基于Realized Garch模型对黄金的波动率建模
+
+### 不同分布下Realized Garch模型参数估计
+
+前文的分析指出Au(T+D)收益率序列具有波动特点。相较于普通的GARCH类模型而言，基
+于高频数据构建的Realized Garch模型更能真实的反映序列的波动性，且低阶 GARCH类模型
+的拟合效果较好，且在精度方面不存在太大的差距，结果可靠。因此本文选择基于5分钟的
+高频收益率对Au(T+D)进行建模，选择已实现方差RV作为已实现测度，将Realized GARCH的
+阶数定为(1,1)。
+
+在分布类型的选取方面，由前文的分析可知，Au(T+D)收益率序列和已实现测
+度RV表现为偏态和尖峰厚尾的特征，表现为非正态分布。为了准确地描述序列的厚尾性，分
+布类型依次选取正态分布(N)、对肥尾特点刻画比较灵活的学生 t 分布(T)、偏t分布
+(ST)和广义双曲线分布(GH)。选用R软件的rugarch包进行Realized GARCH模型的构建。
+
+```{r eval=T}
+Real_Au1 <-xts(read.zoo("./data/Real_Au.csv",header=TRUE,sep=','))
+Real_Au=Real_Au1[1:241]  #样本内参数估计
+
+###设定模型分布形式
+norm_spec.mod= ugarchspec(
+  variance.model = list(model = "realGARCH", garchOrder = c(1,1)), 
+  mean.model = list(armaOrder = c(0,0), include.mean = FALSE), 
+  distribution.model = "norm") # 正态分布
+std_spec.mod= ugarchspec(
+  variance.model = list(model = "realGARCH", garchOrder = c(1,1)), 
+  mean.model = list(armaOrder = c(0,0), include.mean = FALSE), 
+  distribution.model = "std") # t分布
+sstd_spec.mod= ugarchspec(
+  variance.model = list(model = "realGARCH", garchOrder = c(1,1)), 
+  mean.model = list(armaOrder = c(0,0), include.mean = FALSE), 
+  distribution.model = "sstd") # 偏t分布
+ghyp_spec.mod= ugarchspec(
+  variance.model = list(model = "realGARCH", garchOrder = c(1,1)), 
+  mean.model = list(armaOrder = c(0,0), include.mean = FALSE), 
+  distribution.model = "ghyp") # 广义双曲线分布
+
+
+Lst5=list(norm_spec.mod,std_spec.mod,sstd_spec.mod,ghyp_spec.mod)  #存放模型分布
+AuLst=list() #存放Au拟合模型回归结果  1-4是RV
+
+###Au拟合模型参数估计
+for (i in 1:4) {
+  AuLst[[i]]=ugarchfit(data=Real_Au[,"rt"], spec = Lst5[[i]], 
+                        solver = "hybrid", realizedVol = Real_Au[,"RV"])
+}
+names(AuLst)=c("AuRV_norm_sgarch.mod","AuRV_std_sgarch.mod","AuRV_sstd_sgarch.mod","AuRV_ghyp_sgarch.mod")
+
+AuRVfit1=AuLst[["AuRV_norm_sgarch.mod"]]
+AuRVfit1_par=AuRVfit1@fit$matcoef[, 1] #系数
+AuRVfit1_p=AuRVfit1@fit$matcoef[, 4] #p值
+AuRVfit1_log=sum(-AuRVfit1@fit$log.likelihoods) #极大似然值
+AuRVfit1=cbind(AuRVfit1_par,AuRVfit1_p) #合并
+AuRVfit1  #全部显著
+
+AuRVfit2=AuLst[["AuRV_std_sgarch.mod"]]
+AuRVfit2_par=AuRVfit2@fit$matcoef[, 1] #系数
+AuRVfit2_p=AuRVfit2@fit$matcoef[, 4] #p值
+AuRVfit2_log=sum(-AuRVfit2@fit$log.likelihoods) #极大似然值
+AuRVfit2=cbind(AuRVfit2_par,AuRVfit2_p) #合并
+AuRVfit2  #全部显著
+
+AuRVfit3=AuLst[["AuRV_sstd_sgarch.mod"]]
+AuRVfit3_par=AuRVfit3@fit$matcoef[, 1] #系数
+AuRVfit3_p=AuRVfit3@fit$matcoef[, 4] #p值
+AuRVfit3_log=sum(-AuRVfit3@fit$log.likelihoods) #极大似然值
+AuRVfit3=cbind(AuRVfit3_par,AuRVfit3_p) #合并
+AuRVfit3  #全部显著
+
+AuRVfit4=AuLst[["AuRV_ghyp_sgarch.mod"]]
+AuRVfit4_par=AuRVfit4@fit$matcoef[, 1] #系数
+AuRVfit4_p=AuRVfit4@fit$matcoef[, 4] #p值
+AuRVfit4_log=sum(-AuRVfit4@fit$log.likelihoods) #极大似然值
+AuRVfit4=cbind(AuRVfit4_par,AuRVfit4_p) #合并
+AuRVfit4  #全部显著
+
+#似然函数值
+AuRV_log=c(AuRVfit1_log,AuRVfit2_log,AuRVfit3_log,AuRVfit4_log)
+AuRV_log  #AuRV_ghyp值最大
+```
+
+```{r Au-estimate, eval=T,results='markup', cache=F}
+options(digits=3)
+Au_estimate <- read.csv('./results/Auestimation.csv',header=T,sep=',',encoding ="ANSI")
+colnames(Au_estimate) <- c("模型形式",'$\\omega$',"$\\alpha$","$\\beta$",'$\\tau_1$','$\\tau_2$','$\\delta$','$\\lambda$','$\\xi$','$\\pi$')
+kable(Au_estimate, row.names =F, align = c("c"), caption="Au(T+D)不同模型参数估计结果",
+             longtable = TRUE, booktabs = TRUE, escape = F,
+             linesep  = c(rep("", 7), "\\hline", rep("",7), "\\hline", rep("",7), "\\hline")) %>%
+			     kable_styling(latex_options = c("scale_down", "repeat_header", "hold_position"),
+                 repeat_header_text = "(续)")%>%
+    kable_styling(full_width = T) %>%
+    column_spec(1:10, width = c("1.8cm", "1.1cm","1.1cm","1.1cm","1.1cm","1.1cm","1.1cm","1.1cm","1.1cm","1.1cm"))%>%
+    footnote(general ="每个参数估计结果的第一行为参数值大小，第二行为每个估计结果的p值。",
+             general_title = "注:",footnote_as_chunk = T,threeparttable=T,fixed_small_size=T) 
+```
+
+表\@ref(tab:Au-estimate)是基于不同分布假设下应用RV已实现测度构建的Au(T+D)的
+Realized GARCH模型参数估计结果。从表中可以看出，不同类型的Realized GARCH模型
+的所有系数在5%的显著性下都是显著的。不同分布模型的估计结果中
+$\alpha$、$\beta$均满足$\alpha>0$、$\beta>0$、$\alpha+\beta>0$的条件，说明模型比
+较稳定；系数$\delta$在1附近，说明测量方程是恰当的；表中$\pi$表示持续系数
+^[$\pi=\beta+\alpha*\delta$，反应了波动率的长期记忆性，称之为持久性系数或持续系
+数，该系数一般而言应该接近于1]，持续系数稳定在0.8附近，说明Au(T+D)的波动率存在较
+强的可持续性。通过对比各模型的参数可以看出，基于不同分布的模型估计结果中的代表波动率长期记忆性
+参数$\beta$值均约为0.3，相互之间的差距不明显，说明影响当期波动率的不仅有前一期的
+波动率，还有前一期已实现测度的因素；测量方程中的杠杆函数$\tau(z_{t})$用于描述金
+融资产收益率不同方向的扰动对波动的非对称影响，从表中$\tau_1<0$，$\tau_2>0$，的结果可
+以看出，模型负向扰动对波动的影响比正向扰动的影响大，且这种非对称的影响较为明显。
+
+
+### Realized GARCH 模型评价
+
+#### 样本内拟合优度评价——似然函数值
+
+判断模型拟合效果的依据为对数似然函数值，值越大说明拟合效果越好，模型越有效。从表
+\@ref(tab:AULOG)中可以看到，在基于已实现测度RV构建的Realised GARCH模型的四种分布
+中，对数似然函数值从正态分布、t 分布、偏 t 分布到广义双曲线分布逐渐增大，广义双
+曲线分布假设下构建的模型极大似然函数值最大，可以认为在广义双曲线分布假设下基于RV
+作为已实现测度方式的Realised GARCH模型拟合度最好。
+
+```{r AULOG, eval=T,results='markup'}
+AULOG=as.data.frame(t(AuRV_log))
+colnames(AULOG)=c('正态分布','t分布','偏t分布','广义双曲线分布')
+rownames(AULOG)=c('对数似然函数值')
+kable(AULOG, align = c('c'), caption="Au(T+D)不同分布下的模型极大似然函数值",longtable = TRUE, booktabs = TRUE, linesep="")
+```
+
+
+#### 样本外预测效果评价——风险价值
+
+为了使分析更为全面，本节选取Kupiec失败率检验法在95%置信水平下对各模型的VaR预测效
+果进行比较，采用固定窗口一步向前预测方法估计样本外VaR值^[风险价值（Value at
+Risk,VaR）是用来测量金融资产在市场价格波动的情况下可能的最大损失。]。预测区间为
+2020年7月1日至2020年12月31日，共126个交易日。LR越小，p值越大，表明模型越精确，
+可信度越高。
+
+```{r Auvar, eval=T,results='markup'}
+Auvar=read.csv("./results/AuVaR.csv",header=T,sep=',',encoding ="ANSI") 
+colnames(Auvar)=c("VaR显著性水平","模型形式","LR统计量","失败率","失败天数","P值")
+Auvar[2,1]="$\\alpha$=0.01"
+Auvar[-2,1]=""
+kable(Auvar, row.names =F, align = c("c"), caption="不同Realized Garch模型样本外VaR一步预测",
+             longtable = TRUE, booktabs = TRUE, escape = F,
+             linesep  = "") %>%
+			     kable_styling(latex_options = c("scale_down", "repeat_header", "hold_position"),
+                 repeat_header_text = "(续)")%>%
+    kable_styling(full_width = T) %>%
+    column_spec(1:6, width = c("2cm","3cm", "1.9cm", "1.9cm","1.9cm", "1.9cm"))
+```
+
+表\@ref(tab:Auvar)展示了基于不同分布构建的Au(T+D)的
+Realized Garch模型样本外VaR一步预测结果。从表中可以看出p值较大，不
+能拒绝原假设，这说明构建的这些模型对VaR预测结果都是都是有效的。置信水平为95%(显著性为0.05）时，基
+于广义双曲线分布假设构建的模型效果也是相对更好的。
+
+综合样本内对拟合优度评价和样本外预测效果评价可以得出以下结论：对于Au(T+D)收益率
+序列，在广义双曲线分布假设下基于RV作为已实现测度方式的Realised GARCH模型拟合
+度最优，风险预测效果最好。
+
+
+### 最优模型形式
+
+基于以上的分析，对于Au(T+D)收益率序列选择在广义双曲线分布假设下基于RV作为已实
+现测度方式的Realised GARCH(1,1)模型，代入估计的参数可得最优模型的形式如下：
+$$\begin{cases}
+r_{t}=\sqrt{h_{t}} z_{t} \\
+\log h_{t}=0.422+0.319 \log h_{t-1}+0.484\log x_{t-1} \\
+\log x_{1}=-0.831+1.03\log h_{t}+\tau\left(z_{t}\right)+\mu_{t} \\
+\tau\left(z_{t}\right)=-0.227 z_{t}+0.226\left(z_{t}^{2}-1\right)\\
+\end{cases}$${#eq:Aurg} 
+&emsp;&emsp;$r_t$为Au(T+D)的日对数收益率，$z_t$服从广义
+双曲线分布，$h_t$为隐含波动率，$x_t$表示波动率的已实现度量，这里使用的是RV作为已
+实现波动率的估计。
+
+
+```{r Auvol,eval=T,fig.width=10,fig.height=6,fig.cap = "Au(T+D)波动率拟合图",fig.pos="H",dev=c("png","cairo_pdf"),out.width="95%",fig.align='center',dev.args=list(family="Microsoft YaHei UI Light")}
+total_Au = xts(read.zoo("./data/Real_Au.csv",header=TRUE,sep=','))
+best_model = ugarchfit(data=total_Au[,"rt"], spec = Lst5[[4]], 
+                      solver = "hybrid", realizedVol = total_Au[,"RV"])
+Auvol = best_model@fit[["sigma"]]^2
+fit1=stats::arima(total_Au$rt,order = c(0,0,0))
+Au_r=stats::residuals(fit1)
+
+x=c("201908","10","12","202002","4","6","8","10","12")
+xat=c(23,64,103,141,183,222,265,308,351)
+plot(Auvol,type='l',xlab='日期',ylab='波动率',xaxt = "n")
+lines(Au_r^2,type="l",xlab="日期",ylab="波动率",xaxt="n",col='grey')
+axis(1,labels=x,at=xat)
+legend("topleft",c("拟合波动率","实际波动率"),lty=c(1,1),col=c("black","grey"),cex=1)
+```
+
+
+利用最优模型对Au(T+D)波动率进行拟合，结果如图\@ref(fig:Auvol)所示。通过对不同时
+刻波动率的表现特征分析发现，自2019年8月到9月初，Au(T+D)出现较小幅度的波动，在
+2019年7月底-8月初英国强硬脱欧、贸易战愈演愈烈，边缘战争不断爆发的一连串风险事件
+引燃了8月以来的黄金行情。2019年8月以来许多货币对美元出现了贬值，美债收益率倒挂严
+重^[利率倒挂是指利率期限结构中出现长期利率水平低于中短期利率水平的现象。流动性偏
+好理论认为在正常的市场中，由于人们更喜欢中短期流动性的资金，因此中短期利率水平会
+低于长期利率水平。]，在美国实际利率下行趋势开启、贸易战不断侵蚀美元信用体系的背
+景下，使得投资者对于经济衰退的担忧加剧，由于黄金具有套期保值的特性，加上人们对经
+济衰退的担忧，黄金价格逐渐上涨。2020年3月开始Au(T+D)出现了剧烈波动，结合当时现实
+背景可知，当时新冠疫情在世界大面积爆发，美国、英国等国家逐渐出现疫情失控的局面，
+市场持悲观态度，市场风险有所增加，这也引起了黄金价格的大幅度上涨，引起了剧烈波
+动。2020年8-9月，各国开始陆陆续续公布新冠疫苗的进展，市场有所回暖，但也在一定程
+度上造成黄金的下跌，其对应的收益率也波动剧烈。
+
+
+
+# 结论与启示
+
+本文选取了在贵金属市场中具有代表性的黄金作为研究对象，以Au(T+D)的5分钟高频收益率
+序列，结合已实现测度RV构建一元Realized GARCH模型，对黄金波动特征研究分析，可获得
+如下结论：
+
+1. Au(T+D)的收益率序列呈尖峰厚尾的现象，不具有正态分布的特征，且存在显著的条件异
+   方差效应，即在贵金属现货市场中黄金的波动表现出显著的时变性和集聚性。
+
+2. 利用5分钟高频收益率计算Au(T+D)的已实现方差RV，基于不同分布构建的一元Realized
+   GARCH模型后，发现Au(T+D)基于RV和广义双曲线分布的Realized GARCH拟合效果最好，说明
+   已实现方差RV能捕捉到连续的价格突变，减少高频交易数据的微观噪音。
+
+3. 根据测量方程中的杠杆函数$\tau(z_{t})$所对应的$\tau_1<0$，$\tau_2>0$，得出
+   收益率序列存在明显的非对称性，即杠杆效应，并且负向收益率冲击对波动率
+   的影响要比正向收益率对波动率的影响更大。
+   
+4. 通过分析最优模型刻画的波动率，发现黄金在市场动荡以及新冠疫情影响下波动剧烈，
+   在市场动荡，趋于不利背景下，贵金属的保值避险优势尽显。 
+
+
+
+
+
+
+
+
+
+
+
+<!--# 参考文献 {-}-->
+[//]: # (\bibliography{Bibfile})
